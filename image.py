@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import cv2
 import dlib
 import numpy as np
+import os
 
 app = Flask(__name__)
 
@@ -53,4 +54,6 @@ def detect_face_shape():
         return jsonify({"face_shape": face_shape})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Get the port from the environment variable (Railway assigns it)
+    port = int(os.getenv("PORT", 5000))  # Default to 5000 if PORT is not set
+    app.run(host="0.0.0.0", port=port, debug=False)  # Set debug=False for production
